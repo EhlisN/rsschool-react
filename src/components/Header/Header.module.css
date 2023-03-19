@@ -10,3 +10,9 @@
   height: 80px;
   padding: 0 40px;
 }
+
+.pageName {
+  font-size: 24px;
+  color: rgb(67, 67, 95);
+  font-weight: 700;
+}

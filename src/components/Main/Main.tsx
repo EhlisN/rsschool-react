@@ -46,6 +46,7 @@ class Main extends React.Component {
   render() {
     return (
       <div className={style.main}>
+        <h2 className={style.name}>Main Page</h2>
         <div className={style.search}>
           <span className={style.search__title}> &#128269;</span>
           <input

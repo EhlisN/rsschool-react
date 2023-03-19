@@ -3,6 +3,12 @@
   text-align: center;
 }
 
+.name {
+  font-size: 30px;
+  color: rgb(50, 50, 87);
+  margin-bottom: 20px;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(4, 340px);
