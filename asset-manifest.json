@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/rsschool-react/static/css/main.4010d680.css",
+    "main.js": "/rsschool-react/static/js/main.99078764.js",
+    "index.html": "/rsschool-react/index.html",
+    "main.4010d680.css.map": "/rsschool-react/static/css/main.4010d680.css.map",
+    "main.99078764.js.map": "/rsschool-react/static/js/main.99078764.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4010d680.css",
+    "static/js/main.99078764.js"
+  ]
+}
