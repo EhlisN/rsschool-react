@@ -25,7 +25,9 @@
     "test": "react-scripts test --coverage --watchAll",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .ts,.tsx src/",
+    "format": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
