@@ -17,9 +17,9 @@ describe('Main test', () => {
     await act(async () => {
       render(<Main />);
     });
-    const inputElement = screen.getByRole('value');
-    userEvent.type(inputElement, 'test input');
     await waitFor(() => {
+      const inputElement = screen.getByRole('value');
+      userEvent.type(inputElement, 'test input');
       expect(inputElement).toHaveValue('test input');
     });
   });

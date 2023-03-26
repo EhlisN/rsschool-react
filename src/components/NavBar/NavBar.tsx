@@ -13,6 +13,9 @@ class NavBar extends React.Component {
           <Link className={style.item} to={'about'}>
             About Us
           </Link>
+          <Link className={style.item} to={'person'}>
+            Person
+          </Link>
         </div>
       </div>
     );
