@@ -1,3 +1,4 @@
+import AddPerson from 'components/AddPerson/AddPerson';
 import Person from 'components/Person/Person';
 import { IPerson } from 'components/state/IPerson';
 import React from 'react';
@@ -12,11 +13,16 @@ class PersonPage extends React.Component {
     items: [],
   };
 
+  addCard = (card: IPerson) => {
+    const newState = this.state;
+    newState.items = [...this.state.items, card];
+    this.setState(newState);
+  };
+
   render() {
     return (
       <div className={style.formPage}>
-        <h2>Person Page</h2>
-        <div>Add Person</div>
+        <AddPerson addCard={this.addCard} ind={this.state.items.length} />
         <Person />
       </div>
     );

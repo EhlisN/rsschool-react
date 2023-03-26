@@ -1,0 +1,87 @@
+/* .addPerson {
+  background-color: rgb(203, 148, 148);
+} */
+
+.form {
+  /* border: 1px solid rgb(99, 89, 159); */
+  box-shadow: 0 1px 6px rgb(0 0 0 / 12%), 0 1px 4px rgb(0 0 0 / 24%);
+  padding: 50px;
+  margin: 30px 0;
+  color: rgb(56, 56, 89);
+}
+
+.form__fieldset {
+  display: flex;
+  margin-top: 20px;
+  border: none;
+  text-align: left;
+}
+
+.form__label {
+  width: 200px;
+  position: relative;
+  font-weight: 700;
+}
+
+.form__file {
+  opacity: 0;
+}
+
+.form__file__button,
+.input__submit,
+.open__btn {
+  display: inline-block;
+  height: 30px;
+  width: 200px;
+  background-color: rgb(147, 171, 179);
+  color: #fff;
+}
+
+.form__file__button,
+.input__submit,
+.form__file {
+  position: absolute;
+  left: 300px;
+  height: 30px;
+  width: 200px;
+}
+
+.input__submit:disabled {
+  background-color: rgb(203, 209, 211);
+}
+
+.form__name,
+.form__desc {
+  width: calc(100% - 200px);
+  background-color: inherit;
+  padding: 10px;
+}
+
+.form__desc {
+  min-height: 100px;
+}
+
+.form__date,
+.form__status {
+  width: 200px;
+  padding: 10px;
+  background-color: rgb(147, 171, 179);
+  color: #fff;
+  text-align: center;
+}
+
+.form__radio,
+.form__hobby {
+  text-align: left;
+}
+
+.form__submit,
+.form__error {
+  width: 200px;
+  color: rgb(109, 199, 174);
+  font-weight: 700;
+}
+
+.form__error {
+  color: rgb(153, 29, 35);
+}
