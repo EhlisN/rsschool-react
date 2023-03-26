@@ -23,7 +23,15 @@ class PersonPage extends React.Component {
     return (
       <div className={style.formPage}>
         <AddPerson addCard={this.addCard} ind={this.state.items.length} />
-        <Person />
+        {this.state.items.length === 0 ? (
+          <div>No Person</div>
+        ) : (
+          <div className={style.persons}>
+            {this.state.items.map((item) => {
+              return <Person key={item.id} item={item} />;
+            })}
+          </div>
+        )}
       </div>
     );
   }

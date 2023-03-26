@@ -225,7 +225,7 @@ class AddPerson extends React.Component<AddPersonType> {
               <label className={style.form__label}>Status: </label>
               <select className={style.form__status} name="status" ref={this.statusSelect}>
                 <option value="free">free</option>
-                <option value="merried">married</option>
+                <option value="married">married</option>
                 <option value="widow">widow</option>
                 <option value="divorced">divorced</option>
               </select>

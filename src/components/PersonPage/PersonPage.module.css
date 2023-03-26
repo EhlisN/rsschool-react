@@ -1,24 +1,22 @@
 .formPage {
-  background-color: rgb(246, 250, 218);
   text-align: center;
   padding: 50px;
 }
 
 .persons {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  justify-content: space-around;
 }
 
-.person {
-  width: 30%;
-  border: 1px solid black;
-  padding: 20px;
-  margin: 1%;
+@media (max-width: 1080px) {
+  .persons {
+    grid-template-columns: repeat(2, 340px);
+  }
 }
 
-.person__img img {
-  width: 100%;
-  border-radius: 50%;
-  box-shadow: 0 1px 6px rgb(0 0 0 / 12%), 0 1px 4px rgb(0 0 0 / 24%);
-  margin-bottom: 20px;
+@media (max-width: 720px) {
+  .persons {
+    grid-template-columns: repeat(1, 340px);
+  }
 }
