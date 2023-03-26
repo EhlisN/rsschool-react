@@ -35,8 +35,10 @@ class AddPerson extends React.Component<AddPersonType> {
   state = {
     disabled: true,
     required: false,
-    errorText: '',
     openForm: false,
+    errorText: '',
+    errorDesc: '',
+    fileInfo: '',
   };
 
   handleSubmit = async (e: React.SyntheticEvent) => {
@@ -70,7 +72,14 @@ class AddPerson extends React.Component<AddPersonType> {
     this.genderInput = 'other';
     this.hobbyInput = [];
     target.reset();
-    this.setState({ disabled: true, required: false });
+    this.setState({
+      disabled: true,
+      required: false,
+      openForm: false,
+      errorText: '',
+      errorDesc: '',
+      fileInfo: '',
+    });
   };
 
   handleFileInput = (e: React.SyntheticEvent) => {
@@ -78,11 +87,12 @@ class AddPerson extends React.Component<AddPersonType> {
     const target = e.target as HTMLInputElement;
 
     if (target.files) {
+      const nameLink = target.files[0].name;
+      this.setState({ fileInfo: nameLink });
       reader.onload = (e: ProgressEvent<FileReader>) => {
         const readerTarget = e.target as FileReader;
         this.fileLink = readerTarget.result?.toString() as string;
       };
-
       reader.readAsDataURL(target.files[0]);
     }
   };
@@ -107,24 +117,37 @@ class AddPerson extends React.Component<AddPersonType> {
       !this.nameInput.current ||
       this.nameInput.current.value === '' ||
       !this.dateInput.current ||
+      this.dateInput.current.value === '' ||
       !this.descrInput.current ||
       this.descrInput.current.value === ''
     ) {
       this.setState({ disabled: true });
       return;
     }
+    if (this.nameInput.current.value[0] < 'A' || this.nameInput.current.value[0] > 'Z') {
+      this.setState({ disabled: true });
+      return;
+    }
     this.setState({ disabled: this.form.current?.checkValidity() ? false : true });
   };
 
-  checkName = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+  checkName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const el = e.target.value;
-    console.log(e.target.name);
     if (el[0] < 'A' || el[0] > 'Z') {
       this.setState({ errorText: `Incorrect ${e.target.name} data` });
     } else if (el.length === 0) {
       this.setState({ errorText: `Not empty ${e.target.name} data` });
     } else {
       this.setState({ errorText: '' });
+    }
+  };
+
+  checkDesc = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const el = e.target.value;
+    if (el.length === 0) {
+      this.setState({ errorDesc: `Not empty ${e.target.name} data` });
+    } else {
+      this.setState({ errorDesc: '' });
     }
   };
 
@@ -135,7 +158,12 @@ class AddPerson extends React.Component<AddPersonType> {
   render() {
     return (
       <div className={style.addPerson}>
-        <button className={style.open__btn} type="button" onClick={this.changeOpenForm}>
+        <button
+          data-testid="open"
+          className={style.open__btn}
+          type="button"
+          onClick={this.changeOpenForm}
+        >
           {this.state.openForm ? `Close form` : `Add person`}
         </button>
         {this.state.openForm ? (
@@ -148,7 +176,7 @@ class AddPerson extends React.Component<AddPersonType> {
           >
             <fieldset className={style.form__fieldset}>
               <label className={style.form__label}>Image: </label>
-              <button className={style.form__file__button}>Выберите файл</button>
+              <button className={style.form__file__button}>Add file</button>
               <input
                 className={style.form__file}
                 type="file"
@@ -158,6 +186,7 @@ class AddPerson extends React.Component<AddPersonType> {
                 onChange={this.handleFileInput}
                 ref={this.imageInput}
               />
+              <span className={style.form__file__info}>{this.state.fileInfo}</span>
             </fieldset>
             <fieldset className={style.form__fieldset}>
               <label className={style.form__label}>Full name: </label>
@@ -165,25 +194,35 @@ class AddPerson extends React.Component<AddPersonType> {
                 className={style.form__name}
                 type="name"
                 name="name"
-                placeholder="Start with a capital letter"
+                placeholder="Enter name with a capital letter"
                 data-testid="name"
                 ref={this.nameInput}
                 required={this.state.required}
                 onChange={this.checkName}
               />
+              {this.state.errorText ? (
+                <span className={style.form__error}>{this.state.errorText}</span>
+              ) : (
+                <></>
+              )}
             </fieldset>
 
             <fieldset className={style.form__fieldset}>
               <label className={style.form__label}>Description: </label>
               <textarea
                 className={style.form__desc}
-                placeholder="Start with a capital letter"
+                placeholder="Enter desription"
                 name="desc"
                 data-testid="descr"
                 ref={this.descrInput}
                 required={this.state.required}
-                onChange={this.checkName}
+                onChange={this.checkDesc}
               />
+              {this.state.errorDesc ? (
+                <span className={style.form__error}>{this.state.errorDesc}</span>
+              ) : (
+                <></>
+              )}
             </fieldset>
 
             <fieldset className={style.form__fieldset}>
@@ -263,8 +302,8 @@ class AddPerson extends React.Component<AddPersonType> {
 
             <fieldset className={style.form__fieldset}>
               <label>
-                {this.state.errorText ? (
-                  <span className={style.form__error}>{this.state.errorText}</span>
+                {this.state.errorText || this.state.errorDesc ? (
+                  <span className={style.form__error}>Data is not correct</span>
                 ) : (
                   <span className={style.form__submit}>Submit your ad</span>
                 )}

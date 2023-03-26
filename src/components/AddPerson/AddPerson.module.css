@@ -13,6 +13,7 @@
 .form__fieldset {
   display: flex;
   margin-top: 20px;
+  flex-wrap: wrap;
   border: none;
   text-align: left;
   position: relative;
@@ -35,6 +36,11 @@
   width: 200px;
   background-color: rgb(147, 171, 179);
   color: #fff;
+}
+
+.form__file__info {
+  position: absolute;
+  left: 410px;
 }
 
 .form__file__button,
@@ -92,9 +98,16 @@
     text-align: center;
     align-items: center;
   }
+  .form__file__info {
+    display: inline-block;
+    width: 100%;
+    left: 0px;
+    top: 60px;
+    text-align: center;
+  }
   .form__fieldset:first-of-type,
   .form__fieldset:last-of-type {
-    height: 50px;
+    height: 70px;
   }
   .form__label,
   .form__file__button,

@@ -22,6 +22,7 @@ class PersonPage extends React.Component {
   render() {
     return (
       <div className={style.formPage}>
+        <div>Person</div>
         <AddPerson addCard={this.addCard} ind={this.state.items.length} />
         {this.state.items.length === 0 ? (
           <div>No Person</div>
