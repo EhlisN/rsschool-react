@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/rsschool-react/static/css/main.4010d680.css",
-    "main.js": "/rsschool-react/static/js/main.99078764.js",
+    "main.css": "/rsschool-react/static/css/main.19f768eb.css",
+    "main.js": "/rsschool-react/static/js/main.105bcfc9.js",
     "index.html": "/rsschool-react/index.html",
-    "main.4010d680.css.map": "/rsschool-react/static/css/main.4010d680.css.map",
-    "main.99078764.js.map": "/rsschool-react/static/js/main.99078764.js.map"
+    "main.19f768eb.css.map": "/rsschool-react/static/css/main.19f768eb.css.map",
+    "main.105bcfc9.js.map": "/rsschool-react/static/js/main.105bcfc9.js.map"
   },
   "entrypoints": [
-    "static/css/main.4010d680.css",
-    "static/js/main.99078764.js"
+    "static/css/main.19f768eb.css",
+    "static/js/main.105bcfc9.js"
   ]
 }
