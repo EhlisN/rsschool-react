@@ -4,14 +4,14 @@ import { Route, Routes } from 'react-router';
 import AboutUs from 'components/AboutUs/AboutUs';
 import ErrorPage from 'components/ErrorPage/ErrorPage';
 import { Navigate } from 'react-router-dom';
-import { HeaderWithRouter } from 'components/Header/Header';
+import Header from 'components/Header/Header';
 import PersonPage from 'components/PersonPage/PersonPage';
 import Main from 'components/Main/Main';
 
 const App = () => {
   return (
     <div className="App">
-      <HeaderWithRouter />
+      <Header />
       <Routes>
         <Route path="" element={<Navigate to="/main" replace />} />
         <Route path="/main" element={<Main />} />
