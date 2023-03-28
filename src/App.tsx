@@ -8,7 +8,7 @@ import { HeaderWithRouter } from 'components/Header/Header';
 import PersonPage from 'components/PersonPage/PersonPage';
 import Main from 'components/Main/Main';
 
-export const App = () => {
+const App = () => {
   return (
     <div className="App">
       <HeaderWithRouter />
@@ -23,3 +23,5 @@ export const App = () => {
     </div>
   );
 };
+
+export default App;
