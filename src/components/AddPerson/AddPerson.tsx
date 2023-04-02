@@ -1,328 +1,249 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './AddPerson.module.css';
 import noPhoto from '../../assets/image/noPhoto.png';
 import { IPerson } from 'components/state/IPerson';
+import { useForm } from 'react-hook-form';
 
 type AddPersonType = {
   addCard: (card: IPerson) => void;
   ind: number;
 };
 
-class AddPerson extends React.Component<AddPersonType> {
-  form: React.RefObject<HTMLFormElement>;
-  imageInput: React.RefObject<HTMLInputElement>;
-  nameInput: React.RefObject<HTMLInputElement>;
-  descrInput: React.RefObject<HTMLTextAreaElement>;
-  dateInput: React.RefObject<HTMLInputElement>;
-  statusSelect: React.RefObject<HTMLSelectElement>;
-  genderInput: string;
-  hobbyInput: string[];
-  fileLink: string;
+type AddPersonSubmitForm = {
+  image: FileList;
+  name: string;
+  description: string;
+  dateOfBirth: string;
+  status: string;
+};
 
-  constructor(props: AddPersonType) {
-    super(props);
-    this.form = React.createRef() as React.RefObject<HTMLFormElement>;
-    this.imageInput = React.createRef();
-    this.nameInput = React.createRef();
-    this.dateInput = React.createRef();
-    this.descrInput = React.createRef();
-    this.statusSelect = React.createRef();
-    this.genderInput = 'other';
-    this.hobbyInput = [];
-    this.fileLink = '';
-  }
+const AddPerson = (props: AddPersonType) => {
+  const [gender, setGender] = useState('other');
+  const [hobby, setHobby] = useState<string[]>([]);
+  const [openForm, setOpenForm] = useState(false);
+  const [fileInfo, setFileInfo] = useState('No image');
 
-  state = {
-    disabled: true,
-    required: false,
-    openForm: false,
-    errorText: '',
-    errorDesc: '',
-    fileInfo: '',
-  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<AddPersonSubmitForm>();
 
-  handleSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-
-    if (!this.nameInput.current || !this.dateInput.current || !this.descrInput.current) return;
-
-    if (!this.state.required) {
-      await this.setState({ required: true });
-      await this.checkFormValidation();
-      if (this.state.disabled) return;
-    }
-
-    const target = e.target as HTMLFormElement;
-
-    const card: IPerson = {
-      id: this.props.ind,
-      image: this.fileLink ? this.fileLink : noPhoto,
-      name: this.nameInput.current.value,
-      description: this.descrInput.current.value,
-      dateOfBirth: this.dateInput.current.value,
-      gender: this.genderInput,
-      status: this.statusSelect.current?.value || 'free',
-      hobby: this.hobbyInput.length !== 0 ? this.hobbyInput : ['No hobby'],
+  const onSubmit = async (data: AddPersonSubmitForm) => {
+    const fileLink = await handleFileInput(data.image);
+    const card = {
+      ...data,
+      image: fileLink ? fileLink : noPhoto,
+      gender: gender,
+      hobby: hobby.length ? hobby : ['No hobby'],
+      id: props.ind,
     };
-
-    await this.props.addCard(card);
-
+    props.addCard(card);
     alert('Card data has been saved');
-    this.fileLink = '';
-    this.genderInput = 'other';
-    this.hobbyInput = [];
-    target.reset();
-    this.setState({
-      disabled: true,
-      required: false,
-      openForm: false,
-      errorText: '',
-      errorDesc: '',
-      fileInfo: '',
-    });
+    reset();
+    setHobby([]);
+    setGender('other');
+    setFileInfo('No image');
   };
 
-  handleFileInput = (e: React.SyntheticEvent) => {
-    const reader = new FileReader();
-    const target = e.target as HTMLInputElement;
-
-    if (target.files) {
-      const nameLink = target.files[0].name;
-      this.setState({ fileInfo: nameLink });
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        const readerTarget = e.target as FileReader;
-        this.fileLink = readerTarget.result?.toString() as string;
-      };
-      reader.readAsDataURL(target.files[0]);
+  const handleFileInput = async (image: FileList) => {
+    if (image[0]) {
+      const link = await URL.createObjectURL(image[0]);
+      return link;
     }
   };
 
-  changeRadio = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeRadio = (e: React.ChangeEvent<HTMLInputElement>) => {
     const el = e.target.value;
-    this.genderInput = el;
+    setGender(el);
   };
 
-  changeCheckbox = (e: React.MouseEvent<HTMLInputElement>) => {
+  const changeCheckbox = (e: React.MouseEvent<HTMLInputElement>) => {
     const el = e.currentTarget.value;
-    const ind = this.hobbyInput.indexOf(el);
+    const ind = hobby.indexOf(el);
     if (ind !== -1) {
-      this.hobbyInput.splice(ind, 1);
+      hobby.splice(ind, 1);
       return;
     }
-    this.hobbyInput.push(el);
+    hobby.push(el);
   };
 
-  checkFormValidation = () => {
-    if (
-      !this.nameInput.current ||
-      this.nameInput.current.value === '' ||
-      !this.dateInput.current ||
-      this.dateInput.current.value === '' ||
-      !this.descrInput.current ||
-      this.descrInput.current.value === ''
-    ) {
-      this.setState({ disabled: true });
-      return;
-    }
-    if (this.nameInput.current.value[0] < 'A' || this.nameInput.current.value[0] > 'Z') {
-      this.setState({ disabled: true });
-      return;
-    }
-    this.setState({ disabled: this.form.current?.checkValidity() ? false : true });
+  const changeFileInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const ind = e.target.value.lastIndexOf('\\');
+    const name = e.target.value.slice(ind + 1);
+    setFileInfo(name);
   };
 
-  checkName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const el = e.target.value;
-    if (el[0] < 'A' || el[0] > 'Z') {
-      this.setState({ errorText: `Incorrect ${e.target.name} data` });
-    } else if (el.length === 0) {
-      this.setState({ errorText: `Not empty ${e.target.name} data` });
-    } else {
-      this.setState({ errorText: '' });
-    }
+  const validationForm = {
+    image: { required: false, onChange: changeFileInfo },
+    name: {
+      required: 'Name is required',
+      pattern: {
+        value: /^[A-Z]+[a-zA-Z]*$/,
+        message: 'First letter must be capital',
+      },
+      minLength: {
+        value: 3,
+        message: 'Name must have at least 3 characters',
+      },
+    },
+    date: { required: 'Date is required' },
+    description: { required: 'Description is required' },
+    status: { required: 'Status is required' },
   };
 
-  checkDesc = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const el = e.target.value;
-    if (el.length === 0) {
-      this.setState({ errorDesc: `Not empty ${e.target.name} data` });
-    } else {
-      this.setState({ errorDesc: '' });
-    }
+  const changeOpenForm = () => {
+    openForm ? setOpenForm(false) : setOpenForm(true);
   };
 
-  changeOpenForm = () => {
-    this.state.openForm ? this.setState({ openForm: false }) : this.setState({ openForm: true });
-  };
+  return (
+    <div className={style.addPerson}>
+      <button data-testid="open" className={style.open__btn} type="button" onClick={changeOpenForm}>
+        {openForm ? `Close form` : `Add person`}
+      </button>
+      {openForm ? (
+        <form data-testid="form" onSubmit={handleSubmit(onSubmit)}>
+          <fieldset className={style.form__fieldset}>
+            <label className={style.form__label}>Image: </label>
+            <button className={style.form__file__button}>Add file</button>
+            <input
+              className={style.form__file}
+              type="file"
+              placeholder="Attach flat image"
+              accept="image/*"
+              data-testid="file"
+              {...register('image', validationForm.image)}
+            />
+            <span className={style.form__file__info}>{fileInfo}</span>
+          </fieldset>
+          <fieldset className={style.form__fieldset}>
+            <label className={style.form__label}>Full name: </label>
+            <input
+              className={style.form__name}
+              type="name"
+              // name="name"
+              placeholder="Enter name with a capital letter"
+              data-testid="name"
+              {...register('name', validationForm.name)}
+            />
+            {errors.name && <span className={style.form__error}>{errors.name.message}</span>}
+          </fieldset>
+          <fieldset className={style.form__fieldset}>
+            <label className={style.form__label}>Description: </label>
+            <textarea
+              className={style.form__desc}
+              placeholder="Enter desription"
+              // name="desc"
+              data-testid="descr"
+              {...register('description', validationForm.description)}
+            />
+            {errors.description && (
+              <span className={style.form__error}>{errors.description.message}</span>
+            )}
+          </fieldset>
 
-  render() {
-    return (
-      <div className={style.addPerson}>
-        <button
-          data-testid="open"
-          className={style.open__btn}
-          type="button"
-          onClick={this.changeOpenForm}
-        >
-          {this.state.openForm ? `Close form` : `Add person`}
-        </button>
-        {this.state.openForm ? (
-          <form
-            className={style.form}
-            data-testid="form"
-            onSubmit={this.handleSubmit}
-            onChange={this.checkFormValidation}
-            ref={this.form}
-          >
-            <fieldset className={style.form__fieldset}>
-              <label className={style.form__label}>Image: </label>
-              <button className={style.form__file__button}>Add file</button>
-              <input
-                className={style.form__file}
-                type="file"
-                placeholder="Attach flat image"
-                accept="image/*"
-                data-testid="file"
-                onChange={this.handleFileInput}
-                ref={this.imageInput}
-              />
-              <span className={style.form__file__info}>{this.state.fileInfo}</span>
-            </fieldset>
-            <fieldset className={style.form__fieldset}>
-              <label className={style.form__label}>Full name: </label>
-              <input
-                className={style.form__name}
-                type="name"
-                name="name"
-                placeholder="Enter name with a capital letter"
-                data-testid="name"
-                ref={this.nameInput}
-                required={this.state.required}
-                onChange={this.checkName}
-              />
-              {this.state.errorText ? (
-                <span className={style.form__error}>{this.state.errorText}</span>
-              ) : (
-                <></>
-              )}
-            </fieldset>
+          <fieldset className={style.form__fieldset}>
+            <label className={style.form__label}>Date of birthday: </label>
+            <input
+              type="date"
+              data-testid="date"
+              className={style.form__date}
+              placeholder="Input arrival date"
+              {...register('dateOfBirth', validationForm.date)}
+            />
+            {errors.dateOfBirth && (
+              <span className={style.form__error}>{errors.dateOfBirth.message}</span>
+            )}
+          </fieldset>
 
-            <fieldset className={style.form__fieldset}>
-              <label className={style.form__label}>Description: </label>
-              <textarea
-                className={style.form__desc}
-                placeholder="Enter desription"
-                name="desc"
-                data-testid="descr"
-                ref={this.descrInput}
-                required={this.state.required}
-                onChange={this.checkDesc}
-              />
-              {this.state.errorDesc ? (
-                <span className={style.form__error}>{this.state.errorDesc}</span>
-              ) : (
-                <></>
-              )}
-            </fieldset>
-
-            <fieldset className={style.form__fieldset}>
-              <label className={style.form__label}>Date of birthday: </label>
-              <input
-                type="date"
-                data-testid="date"
-                className={style.form__date}
-                placeholder="Input arrival date"
-                ref={this.dateInput}
-              />
-            </fieldset>
-
-            <fieldset className={style.form__fieldset}>
-              <label className={style.form__label}>Gender: </label>
-              <div className={style.form__radio}>
-                <div>
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="other"
-                    defaultChecked
-                    onChange={this.changeRadio}
-                  />
-                  <label> other</label>
-                </div>
-                <div>
-                  <input type="radio" name="gender" value="male" onChange={this.changeRadio} />
-                  <label> male</label>
-                </div>
-                <div>
-                  <input type="radio" name="gender" value="female" onChange={this.changeRadio} />
-                  <label> female</label>
-                </div>
+          <fieldset className={style.form__fieldset}>
+            <label className={style.form__label}>Gender: </label>
+            <div className={style.form__radio}>
+              <div>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="other"
+                  defaultChecked
+                  onChange={changeRadio}
+                />
+                <label> other</label>
               </div>
-            </fieldset>
-
-            <fieldset className={style.form__fieldset}>
-              <label className={style.form__label}>Status: </label>
-              <select className={style.form__status} name="status" ref={this.statusSelect}>
-                <option value="free">free</option>
-                <option value="married">married</option>
-                <option value="widow">widow</option>
-                <option value="divorced">divorced</option>
-              </select>
-            </fieldset>
-
-            <fieldset className={style.form__fieldset}>
-              <label className={style.form__label}>Hobby: </label>
-              <div className={style.form__hobby}>
-                <div>
-                  <input type="checkbox" value="drawing" onClick={this.changeCheckbox} />
-                  <label> Drawing</label>
-                </div>
-                <div>
-                  <input type="checkbox" value="biking" onClick={this.changeCheckbox} />
-                  <label> Biking</label>
-                </div>
-                <div>
-                  <input type="checkbox" value="reading" onClick={this.changeCheckbox} />
-                  <label> Reading</label>
-                </div>
-                <div>
-                  <input type="checkbox" value="cooking" onClick={this.changeCheckbox} />
-                  <label> Cooking</label>
-                </div>
-                <div>
-                  <input type="checkbox" value="swimming" onClick={this.changeCheckbox} />
-                  <label> Swiming</label>
-                </div>
-                <div>
-                  <input type="checkbox" value="other" onClick={this.changeCheckbox} />
-                  <label> Other</label>
-                </div>
+              <div>
+                <input type="radio" name="gender" value="male" onChange={changeRadio} />
+                <label> male</label>
               </div>
-            </fieldset>
+              <div>
+                <input type="radio" name="gender" value="female" onChange={changeRadio} />
+                <label> female</label>
+              </div>
+            </div>
+          </fieldset>
 
-            <fieldset className={style.form__fieldset}>
-              <label>
-                {this.state.errorText || this.state.errorDesc ? (
-                  <span className={style.form__error}>Data is not correct</span>
-                ) : (
-                  <span className={style.form__submit}>Submit your ad</span>
-                )}
-              </label>
-              <input
-                className={style.input__submit}
-                type="submit"
-                value="Submit"
-                disabled={this.state.disabled}
-                data-testid="submit"
-              />
-            </fieldset>
-          </form>
-        ) : (
-          <></>
-        )}
-      </div>
-    );
-  }
-}
+          <fieldset className={style.form__fieldset}>
+            <label className={style.form__label}>Status: </label>
+            <select className={style.form__status} {...register('status', validationForm.status)}>
+              <option value=""></option>
+              <option value="free">free</option>
+              <option value="married">married</option>
+              <option value="widow">widow</option>
+              <option value="divorced">divorced</option>
+            </select>
+            {errors.status && <span className={style.form__error}>{errors.status.message}</span>}
+          </fieldset>
+
+          <fieldset className={style.form__fieldset}>
+            <label className={style.form__label}>Hobby: </label>
+            <div className={style.form__hobby}>
+              <div>
+                <input type="checkbox" value="drawing" onClick={changeCheckbox} />
+                <label> Drawing</label>
+              </div>
+              <div>
+                <input type="checkbox" value="biking" onClick={changeCheckbox} />
+                <label> Biking</label>
+              </div>
+              <div>
+                <input type="checkbox" value="reading" onClick={changeCheckbox} />
+                <label> Reading</label>
+              </div>
+              <div>
+                <input type="checkbox" value="cooking" onClick={changeCheckbox} />
+                <label> Cooking</label>
+              </div>
+              <div>
+                <input type="checkbox" value="swimming" onClick={changeCheckbox} />
+                <label> Swiming</label>
+              </div>
+              <div>
+                <input type="checkbox" value="other" onClick={changeCheckbox} />
+                <label> Other</label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset className={style.form__fieldset}>
+            <label>
+              {Object.keys(errors).length !== 0 ? (
+                <span className={style.form__error__submit}>Data is not correct</span>
+              ) : (
+                <span className={style.form__submit}>Submit your ad</span>
+              )}
+            </label>
+            <input
+              className={style.input__submit}
+              type="submit"
+              value="Submit"
+              data-testid="submit"
+              disabled={Object.keys(errors).length !== 0}
+            />
+          </fieldset>
+        </form>
+      ) : (
+        <></>
+      )}
+    </div>
+  );
+};
 
 export default AddPerson;

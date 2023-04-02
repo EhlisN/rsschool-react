@@ -41,23 +41,23 @@ describe('Form tests', () => {
     });
   });
 
-  test('Should disabled submit button if just first input is valid', async () => {
-    await act(async () => {
+  test('Should disabled submit button if just first input is valid', () => {
+    act(() => {
       const nameInput = screen.getByTestId('name');
-      fireEvent.input(nameInput, { target: { value: 'test value' } });
+      fireEvent.input(nameInput, { target: { value: 'Test value' } });
       const submitBtn = screen.getByTestId('submit');
-      await waitFor(() => expect(submitBtn).toBeDisabled());
+      waitFor(() => expect(submitBtn).toBeDisabled());
     });
   });
 
   test('Should disable button after submit if input is invalid', async () => {
-    await act(async () => {
+    await act(() => {
       const nameInput = screen.getByTestId('name');
       fireEvent.input(nameInput, { target: { value: 'test value' } });
       const submitBtn = screen.getByTestId('submit');
       fireEvent.click(submitBtn);
 
-      await waitFor(() => expect(submitBtn).toBeDisabled());
+      waitFor(() => expect(submitBtn).toBeDisabled());
     });
   });
 
