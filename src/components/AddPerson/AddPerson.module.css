@@ -83,17 +83,23 @@
 
 .form__submit,
 .form__error__submit,
-.form__error {
+.form__error,
+.form__error__file {
   width: 200px;
   color: rgb(109, 199, 174);
   font-weight: 700;
+}
+
+.form__error__file {
+  margin-top: 10px;
 }
 
 .form__error__submit {
   color: rgb(153, 29, 35);
 }
 
-.form__error {
+.form__error,
+.form__error__file {
   color: rgb(153, 29, 35);
   display: block;
   width: 100%;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Card from 'components/Card/Card';
 import { state } from 'components/state/state';
 import style from './Main.module.css';
 import { IProduct } from 'components/state/IProducts';
+import Card from 'components/Card/Card';
 
 const Main = () => {
   const [items, setItems] = useState(state);
@@ -14,7 +14,7 @@ const Main = () => {
     }
     const newState = searchItem(state, value);
     setItems(newState);
-    return () => localStorage.setItem('value', value);
+    localStorage.setItem('value', value);
   }, [value]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
