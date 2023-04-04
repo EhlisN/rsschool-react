@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Card from 'components/Card/Card';
 import { state } from 'components/state/state';
 import style from './Main.module.css';
 import { IProduct } from 'components/state/IProducts';
-import Card from 'components/Card/Card';
 
 const Main = () => {
   const [items, setItems] = useState(state);
   const [value, setValue] = useState(localStorage.getItem('value') || '');
+  const valueRef = useRef<string>();
 
   useEffect(() => {
-    if (!localStorage.getItem('value')) {
-      localStorage.setItem('value', '');
-    }
     const newState = searchItem(state, value);
     setItems(newState);
-    localStorage.setItem('value', value);
+    valueRef.current = value;
   }, [value]);
+
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('value', valueRef.current || '');
+    };
+  }, []);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -42,7 +46,7 @@ const Main = () => {
           className={style.search__input}
           type="text"
           placeholder="Search"
-          value={value || ''}
+          value={value}
           onChange={onChange}
           role="value"
         />
