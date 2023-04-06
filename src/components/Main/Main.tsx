@@ -1,17 +1,32 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Card from 'components/Card/Card';
-import { state } from 'components/state/state';
 import style from './Main.module.css';
 import { IProduct } from 'components/state/IProducts';
+import { getProducts } from 'components/Api/Api';
+import Preloader from 'utils/Preloader/Preloader';
+import Product from 'components/Product/Product';
 
 const Main = () => {
-  const [items, setItems] = useState(state);
+  const [isLoading, setIsLoading] = useState(true);
   const [value, setValue] = useState(localStorage.getItem('value') || '');
+  const [modal, setModal] = useState<null | number>(null);
+  const [items, setItems] = useState<IProduct[]>([]);
   const valueRef = useRef<string>();
 
+  const getItems = useCallback(async (search: string): Promise<void> => {
+    setIsLoading(true);
+    try {
+      const data = await getProducts(search);
+      setItems(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    const newState = searchItem(state, value);
-    setItems(newState);
+    getItems(value);
     valueRef.current = value;
   }, [value]);
 
@@ -21,45 +36,49 @@ const Main = () => {
     };
   }, []);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    const newState = searchItem(state, e.target.value);
-    setItems(newState);
-    setValue(newValue);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
   };
 
-  const searchItem = (array: IProduct[], value: string) => {
-    if (value.length > 0) {
-      return array.filter((item) =>
-        item['title'].toLowerCase().includes(value.toLocaleLowerCase())
-      );
-    }
-    return array;
+  const closeModal = () => {
+    setModal(null);
   };
 
   return (
     <div className={style.main}>
-      <h2 className={style.name}>Main Page</h2>
+      {modal ? (
+        <div className={style.modal}>
+          <div className={style.modal_close} onClick={closeModal}></div>
+          <Product id={modal} closeModal={closeModal} />
+        </div>
+      ) : (
+        <></>
+      )}
+      <h2 className={style.name}>Product</h2>
       <div className={style.search}>
         <span className={style.search__title}> &#128269;</span>
         <input
           className={style.search__input}
           type="text"
           placeholder="Search"
-          value={value}
-          onChange={onChange}
+          value={value || ''}
+          onChange={handleInputChange}
           role="value"
         />
       </div>
-      <div className={style.cards}>
-        {items.length > 0 ? (
-          items.map((item) => {
-            return <Card key={item.id} item={item} />;
-          })
-        ) : (
-          <div>Do not find - {value}</div>
-        )}
-      </div>
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <div className={style.cards}>
+          {items.length > 0 ? (
+            items.map((item) => {
+              return <Card key={item.id} item={item} setModal={setModal} />;
+            })
+          ) : (
+            <div>Do not find - {value}</div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -4,10 +4,15 @@ import style from './Card.module.css';
 
 type PropsType = {
   item: IProduct;
+  setModal: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 const Card = (props: PropsType) => {
   const item = props.item;
+
+  const openModal = () => {
+    props.setModal(item.id);
+  };
 
   return (
     <div className={style.card} key={item.id}>
@@ -15,7 +20,9 @@ const Card = (props: PropsType) => {
         <img className={style.image} src={item.thumbnail} alt={item.title} />
       </div>
       <div className={style.card__description}>
-        <h2 className={style.card__title}>{item.title}</h2>
+        <h2 className={style.card__title} onClick={openModal}>
+          {item.title}
+        </h2>
         <div>
           <b>Brand: </b>
           {item.brand}
@@ -23,10 +30,6 @@ const Card = (props: PropsType) => {
         <div>
           <b>Category: </b>
           {item.category}
-        </div>
-        <div>
-          <b>Description: </b>
-          {item.description}
         </div>
         <div>
           <div className={style.price}>
@@ -39,10 +42,6 @@ const Card = (props: PropsType) => {
                 {Math.round((item.price / 100) * (100 - item.discountPercentage))}$
               </span>
             </div>
-          </div>
-          <div className={style.info}>
-            <div>Rating: {item.stock}</div>
-            <div>Stock: {item.price}</div>
           </div>
         </div>
       </div>
