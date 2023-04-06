@@ -22,7 +22,9 @@ const item = {
   ],
 };
 
+const setModalMock = jest.fn();
+
 test('render card is successful', () => {
-  render(<Card key={item.id} item={item} />);
+  render(<Card key={item.id} item={item} setModal={setModalMock} />);
   expect(screen.getByText('iPhone 9')).toBeInTheDocument();
 });
