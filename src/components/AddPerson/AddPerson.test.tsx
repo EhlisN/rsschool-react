@@ -6,6 +6,7 @@ import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 
 describe('Form tests', () => {
   const addCardMock = jest.fn();
+
   const items: IPerson[] = [
     {
       id: 0,
@@ -62,26 +63,18 @@ describe('Form tests', () => {
   });
 
   test('Should enable button after all required inputs are valid', async () => {
-    await act(async () => {
+    await act(() => {
       const nameInput = screen.getByTestId('name');
-      act(() => {
-        fireEvent.input(nameInput, { target: { value: 'Test value' } });
-      });
+      fireEvent.input(nameInput, { target: { value: 'Test value' } });
 
       const dateInput = screen.getByTestId('date');
-      act(() => {
-        fireEvent.input(dateInput, { target: { value: '16.06.1986' } });
-      });
+      fireEvent.input(dateInput, { target: { value: '16.06.1986' } });
 
       const descrInput = screen.getByTestId('descr');
-      act(() => {
-        fireEvent.input(descrInput, { target: { value: 'test value' } });
-      });
+      fireEvent.input(descrInput, { target: { value: 'test value' } });
 
       const submitBtn = screen.getByTestId('submit');
-      await act(async () => {
-        fireEvent.click(submitBtn);
-      });
+      fireEvent.click(submitBtn);
       waitFor(() => expect(submitBtn).toBeEnabled());
     });
   });
@@ -97,5 +90,14 @@ describe('Form tests', () => {
         expect(fileInput.files[0]).toStrictEqual(file);
       }
     });
+  });
+
+  test('Should render Form ', async () => {
+    const form = screen.getByTestId('form');
+    await act(async () => {
+      const openForm = screen.getByTestId('open');
+      await fireEvent.click(openForm);
+    });
+    expect(form).toBeDefined();
   });
 });

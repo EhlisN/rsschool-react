@@ -20,7 +20,6 @@ type AddPersonSubmitForm = {
 };
 
 const AddPerson = (props: AddPersonType) => {
-  const [hobby, setHobby] = useState<string[]>([]);
   const [openForm, setOpenForm] = useState(false);
   const [fileInfo, setFileInfo] = useState('No image');
 
@@ -32,35 +31,16 @@ const AddPerson = (props: AddPersonType) => {
   } = useForm<AddPersonSubmitForm>();
 
   const onSubmit = async (data: AddPersonSubmitForm) => {
-    const fileLink = await handleFileInput(data.image);
+    const fileLink = await URL.createObjectURL(data.image[0]);
     const card = {
       ...data,
       image: fileLink ? fileLink : noPhoto,
-      hobby: hobby.length ? hobby : ['No hobby'],
       id: props.ind,
     };
     props.addCard(card);
     alert('Card data has been saved');
     reset();
-    setHobby([]);
     setFileInfo('No image');
-  };
-
-  const handleFileInput = async (image: FileList) => {
-    if (image[0]) {
-      const link = await URL.createObjectURL(image[0]);
-      return link;
-    }
-  };
-
-  const changeCheckbox = (e: React.MouseEvent<HTMLInputElement>) => {
-    const el = e.currentTarget.value;
-    const ind = hobby.indexOf(el);
-    if (ind !== -1) {
-      hobby.splice(ind, 1);
-      return;
-    }
-    hobby.push(el);
   };
 
   const changeFileInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -219,7 +199,6 @@ const AddPerson = (props: AddPersonType) => {
                   id="drawing"
                   type="checkbox"
                   value="drawing"
-                  onClick={changeCheckbox}
                   {...register('hobby', validationForm.hobby)}
                 />
                 <label htmlFor="drawing"> Drawing</label>
@@ -229,7 +208,6 @@ const AddPerson = (props: AddPersonType) => {
                   id="biking"
                   type="checkbox"
                   value="biking"
-                  onClick={changeCheckbox}
                   {...register('hobby', validationForm.hobby)}
                 />
                 <label htmlFor="biking"> Biking</label>
@@ -239,7 +217,6 @@ const AddPerson = (props: AddPersonType) => {
                   id="reading"
                   type="checkbox"
                   value="reading"
-                  onClick={changeCheckbox}
                   {...register('hobby', validationForm.hobby)}
                 />
                 <label htmlFor="reading"> Reading</label>
@@ -249,7 +226,6 @@ const AddPerson = (props: AddPersonType) => {
                   id="cooking"
                   type="checkbox"
                   value="cooking"
-                  onClick={changeCheckbox}
                   {...register('hobby', validationForm.hobby)}
                 />
                 <label htmlFor="cooking"> Cooking</label>
@@ -259,7 +235,6 @@ const AddPerson = (props: AddPersonType) => {
                   id="swimming"
                   type="checkbox"
                   value="swimming"
-                  onClick={changeCheckbox}
                   {...register('hobby', validationForm.hobby)}
                 />
                 <label htmlFor="swimming"> Swiming</label>
@@ -269,7 +244,6 @@ const AddPerson = (props: AddPersonType) => {
                   id="otherChec"
                   type="checkbox"
                   value="other"
-                  onClick={changeCheckbox}
                   {...register('hobby', validationForm.hobby)}
                 />
                 <label htmlFor="otherChec"> Other</label>

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import Card from './Card';
 
@@ -27,4 +27,11 @@ const setModalMock = jest.fn();
 test('render card is successful', () => {
   render(<Card key={item.id} item={item} setModal={setModalMock} />);
   expect(screen.getByText('iPhone 9')).toBeInTheDocument();
+});
+
+test('open modal is successful', () => {
+  render(<Card key={item.id} item={item} setModal={setModalMock} />);
+  const titleLink = screen.getByText(item.title);
+  fireEvent.click(titleLink);
+  expect(screen.getByText('Apple')).toBeInTheDocument();
 });

@@ -7,7 +7,7 @@ test('render PersonPage is successful', () => {
   waitFor(() => expect(screen.getByText('Person')).toBeInTheDocument());
 });
 
-test('render PersonPage is successful', async () => {
+test('open form works correct', async () => {
   render(<PersonPage />);
   const addBtn = screen.getByTestId('open');
   await act(async () => {

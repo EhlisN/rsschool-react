@@ -33,6 +33,11 @@
 
 .card__title {
   text-align: center;
+  cursor: pointer;
+}
+
+.card__title:hover {
+  color: rgb(189, 189, 189);
 }
 
 .info {

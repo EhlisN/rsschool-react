@@ -9,9 +9,10 @@ type PropsType = {
 
 const Card = (props: PropsType) => {
   const item = props.item;
+  const setModal = props.setModal;
 
   const openModal = () => {
-    props.setModal(item.id);
+    setModal(item.id);
   };
 
   return (

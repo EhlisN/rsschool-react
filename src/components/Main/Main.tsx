@@ -5,6 +5,7 @@ import { IProduct } from 'components/state/IProducts';
 import { getProducts } from 'components/Api/Api';
 import Preloader from 'utils/Preloader/Preloader';
 import Product from 'components/Product/Product';
+import Search from 'components/Search/Search';
 
 const Main = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -36,10 +37,6 @@ const Main = () => {
     };
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
-
   const closeModal = () => {
     setModal(null);
   };
@@ -54,18 +51,8 @@ const Main = () => {
       ) : (
         <></>
       )}
-      <h2 className={style.name}>Product</h2>
-      <div className={style.search}>
-        <span className={style.search__title}> &#128269;</span>
-        <input
-          className={style.search__input}
-          type="text"
-          placeholder="Search"
-          value={value || ''}
-          onChange={handleInputChange}
-          role="value"
-        />
-      </div>
+      <h2 className={style.name}>Main Page</h2>
+      <Search setValue={setValue} value={value} />
       {isLoading ? (
         <Preloader />
       ) : (

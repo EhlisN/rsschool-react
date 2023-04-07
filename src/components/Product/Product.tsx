@@ -40,14 +40,19 @@ const Product = (props: PropsTypeProduct) => {
         <Preloader />
       ) : (
         <div className={style.card}>
-          <button className={style.card__btn_close} type="button" onClick={props.closeModal}>
+          <button
+            className={style.card__btn_close}
+            data-testid="button"
+            type="button"
+            onClick={props.closeModal}
+          >
             X
           </button>
           <div className={style.show__img} style={{ backgroundImage: `url(${image})` }}></div>
           <div className={style.slide__img}>
             {images.map((img, ind) => (
               <img
-                className=""
+                className={style.slide__img__small}
                 key={ind}
                 src={img}
                 alt={product.title}
