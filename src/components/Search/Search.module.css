@@ -14,10 +14,11 @@
   font-size: 20px;
   font-weight: 700;
   color: rgb(66, 99, 170);
+  width: 25px;
 }
 
 .search__input {
-  width: 80%;
+  width: calc(100% - 85px);
   min-width: 300px;
   padding: 5px 10px;
   margin-left: 10px;
@@ -31,4 +32,19 @@
 
 .search__input:focus {
   outline: none;
+  border-left: 3px solid rgb(66, 99, 170);
+}
+
+.search__btn {
+  height: 35px;
+  width: 60px;
+  border: none;
+  border-left: 3px solid rgb(163, 189, 246);
+  background-color: rgb(241, 234, 234);
+  align-self: flex-end;
+}
+
+.search__btn:hover {
+  border-left: 3px solid rgb(66, 99, 170);
+  text-shadow: 1px 1px 2px rgb(66, 99, 170);
 }
