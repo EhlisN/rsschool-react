@@ -30,7 +30,7 @@ const Search = () => {
           onChange={handleInputChange}
           role="value"
         />
-        <button className={style.search__btn} type="submit">
+        <button data-testid="search-button" className={style.search__btn} type="submit">
           Find
         </button>
       </div>

@@ -1,14 +1,21 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import Product from './Product';
-import { getProductById } from 'components/Api/Api';
+import { Provider } from 'react-redux';
+import { store } from 'redux/store';
 
 describe('ModalProductCard', () => {
   const closeModal = jest.fn();
 
   test('renders product details correctly', async () => {
-    const product = await getProductById(1);
-    render(<Product id={1} closeModal={closeModal} />);
+    render(
+      <Provider store={store}>
+        <Product id={1} closeModal={closeModal} />
+      </Provider>
+    );
+    const state = store.getState();
+    const product = state.productSlice[1];
+
     waitFor(() => {
       expect(screen.getByText(product.title)).toBeInTheDocument();
       expect(screen.getByText(`Brand: ${product.brand}`)).toBeInTheDocument();

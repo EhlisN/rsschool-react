@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IProduct } from 'components/state/IProducts';
 import { IResponseProductApi } from 'components/state/IResponseProductApi';
 
-const BASE_URL = 'https://dummyjson.com/products/';
+export const BASE_URL = 'https://dummyjson.com/products/';
 
 export const productAPI = createApi({
   reducerPath: 'productApi',

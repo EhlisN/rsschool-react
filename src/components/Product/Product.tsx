@@ -12,7 +12,7 @@ type PropsTypeProduct = {
 const Product = (props: PropsTypeProduct) => {
   const id = props.id;
   const { data: product = {} as IProduct, isLoading } = useGetProductByIdQuery(id);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState<string | null>(null);
 
   return (
     <>
@@ -22,13 +22,16 @@ const Product = (props: PropsTypeProduct) => {
         <div className={style.card}>
           <button
             className={style.card__btn_close}
-            data-testid="button"
+            data-testid="close-button"
             type="button"
             onClick={props.closeModal}
           >
             X
           </button>
-          <div className={style.show__img} style={{ backgroundImage: `url(${image})` }}></div>
+          <div
+            className={style.show__img}
+            style={{ backgroundImage: `url(${image || product.thumbnail})` }}
+          ></div>
           <div className={style.slide__img}>
             {product.images.map((img, ind) => (
               <img
