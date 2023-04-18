@@ -1,4 +1,4 @@
-import { IProduct } from 'components/state/IProducts';
+import { IProduct } from 'components/interfaces/IProducts';
 import React, { useState } from 'react';
 import style from './Product.module.css';
 import Preloader from 'utils/Preloader/Preloader';
@@ -19,7 +19,7 @@ const Product = (props: PropsTypeProduct) => {
       {isLoading ? (
         <Preloader />
       ) : (
-        <div className={style.card}>
+        <div className={style.card} data-testid="modal">
           <button
             className={style.card__btn_close}
             data-testid="close-button"

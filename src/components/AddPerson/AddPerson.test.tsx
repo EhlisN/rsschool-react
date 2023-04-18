@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { IPerson } from 'components/state/IPerson';
+import { IPerson } from 'components/interfaces/IPerson';
 import AddPerson from './AddPerson';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 

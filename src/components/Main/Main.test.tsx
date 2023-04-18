@@ -4,7 +4,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import { store } from 'redux/store';
 import Main from './Main';
 
-describe('<Home />', () => {
+describe('<Main />', () => {
   test('handles search input change and form submission', () => {
     const { getByPlaceholderText } = render(
       <Provider store={store}>

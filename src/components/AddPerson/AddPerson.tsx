@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import style from './AddPerson.module.css';
 import noPhoto from '../../assets/image/noPhoto.png';
-import { IPerson } from 'components/state/IPerson';
+import { IPerson } from 'components/interfaces/IPerson';
 import { useForm } from 'react-hook-form';
 
 type AddPersonType = {

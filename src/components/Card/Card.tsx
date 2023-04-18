@@ -1,4 +1,4 @@
-import { IProduct } from 'components/state/IProducts';
+import { IProduct } from 'components/interfaces/IProducts';
 import React from 'react';
 import style from './Card.module.css';
 

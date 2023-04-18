@@ -1,6 +1,6 @@
 import AddPerson from 'components/AddPerson/AddPerson';
 import Person from 'components/Person/Person';
-import { IPerson } from 'components/state/IPerson';
+import { IPerson } from 'components/interfaces/IPerson';
 import React, { useState } from 'react';
 import style from './PersonPage.module.css';
 
