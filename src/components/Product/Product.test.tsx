@@ -1,10 +1,8 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import Product from './Product';
 import { Provider } from 'react-redux';
 import { store } from 'redux/store';
-import Main from 'components/Main/Main';
-import userEvent from '@testing-library/user-event';
 
 describe('<Product />', () => {
   const closeModal = jest.fn();
