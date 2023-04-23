@@ -1,0 +1,103 @@
+.card {
+  position: relative;
+  margin: 10px auto;
+  background-color: rgb(114, 131, 150);
+  padding: 50px;
+  box-shadow: 0 1px 6px rgb(0 0 0 / 12%), 0 1px 4px rgb(0 0 0 / 24%);
+  text-align: center;
+  max-width: 700px;
+  max-height: 90vh;
+  z-index: 14;
+  color: #fff;
+  overflow-y: scroll;
+}
+
+.card::-webkit-scrollbar {
+  width: 10px;
+}
+
+.card::-webkit-scrollbar-track {
+  background-color: rgb(114, 131, 150);
+  border-radius: 10px;
+}
+
+.card::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: linear-gradient(180deg, #7b97ec, #2e4770);
+}
+
+.card__btn_close {
+  position: absolute;
+  left: calc(100% - 50px);
+  top: 10px;
+  padding: 10px;
+  font-size: 20px;
+  background-color: rgb(69, 79, 91);
+  color: #fff;
+  box-shadow: 0 1px 6px rgb(0 0 0 / 12%), 0 1px 4px rgb(0 0 0 / 24%);
+}
+
+.slide__img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  height: 100px;
+  overflow: hidden;
+}
+
+.slide__img__small {
+  max-width: 20%;
+  width: auto;
+  height: 100%;
+  margin: 0 5px;
+  border: 1px solid rgb(33, 45, 78);
+}
+
+.slide__img__small:hover {
+  border: 1px solid rgb(119, 147, 242);
+  cursor: pointer;
+}
+
+.show__img {
+  width: 100%;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.card__title {
+  margin: 20px 0;
+  color: rgb(33, 45, 78);
+}
+
+.card__category {
+  margin: 20px 0;
+}
+
+.card__rating,
+.card__stock {
+  margin: 0 50px;
+  color: rgb(202, 202, 202);
+}
+
+.card__price {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.card__price span {
+  text-decoration: line-through;
+}
+
+.card__discount {
+  color: brown;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 720px) {
+  .card {
+    margin: 10px;
+  }
+}
