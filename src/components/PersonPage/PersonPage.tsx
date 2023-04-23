@@ -6,12 +6,11 @@ import { useAppSelector } from 'redux/store';
 
 const PersonPage = () => {
   const items = useAppSelector((state) => state.personSlice);
-  const lastInd = items.length !== 0 ? items.length - 1 : 0;
 
   return (
     <div className={style.formPage}>
       <div>Person</div>
-      <AddPerson ind={items[lastInd].id} />
+      <AddPerson ind={items.length} />
       {items.length === 0 ? (
         <div>No Person</div>
       ) : (

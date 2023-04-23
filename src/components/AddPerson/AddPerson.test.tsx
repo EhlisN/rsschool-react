@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { IPerson } from 'components/interfaces/IPerson';
 import AddPerson from './AddPerson';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { store } from 'redux/store';
 
 describe('Form tests', () => {
   const items: IPerson[] = [
@@ -24,7 +26,11 @@ describe('Form tests', () => {
   beforeEach(() => {
     jsdomAlert = window.alert;
     window.alert = () => {};
-    render(<AddPerson ind={items[0].id} />);
+    render(
+      <Provider store={store}>
+        <AddPerson ind={items.length} />
+      </Provider>
+    );
     const openForm = screen.getByTestId('open');
     fireEvent.click(openForm);
   });
