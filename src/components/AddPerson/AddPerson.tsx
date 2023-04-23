@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import style from './AddPerson.module.css';
-import noPhoto from '../../assets/image/noPhoto.png';
-import { IPerson } from 'components/interfaces/IPerson';
 import { useForm } from 'react-hook-form';
+import { useAppDispatch } from 'redux/store';
+import { addPerson } from 'redux/slices/personSlice';
 
 type AddPersonType = {
-  addCard: (card: IPerson) => void;
   ind: number;
 };
 
@@ -23,6 +22,8 @@ const AddPerson = (props: AddPersonType) => {
   const [openForm, setOpenForm] = useState(false);
   const [fileInfo, setFileInfo] = useState('No image');
 
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -32,12 +33,18 @@ const AddPerson = (props: AddPersonType) => {
 
   const onSubmit = async (data: AddPersonSubmitForm) => {
     const fileLink = await URL.createObjectURL(data.image[0]);
-    const card = {
-      ...data,
-      image: fileLink ? fileLink : noPhoto,
-      id: props.ind,
-    };
-    props.addCard(card);
+    dispatch(
+      addPerson({
+        id: props.ind,
+        image: fileLink,
+        name: data.name,
+        description: data.description,
+        dateOfBirth: data.dateOfBirth,
+        gender: data.gender,
+        status: data.status,
+        hobby: data.hobby,
+      })
+    );
     alert('Card data has been saved');
     reset();
     setFileInfo('No image');

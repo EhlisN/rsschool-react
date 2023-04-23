@@ -5,8 +5,6 @@ import AddPerson from './AddPerson';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 
 describe('Form tests', () => {
-  const addCardMock = jest.fn();
-
   const items: IPerson[] = [
     {
       id: 0,
@@ -26,7 +24,7 @@ describe('Form tests', () => {
   beforeEach(() => {
     jsdomAlert = window.alert;
     window.alert = () => {};
-    render(<AddPerson ind={items[0].id} addCard={addCardMock} />);
+    render(<AddPerson ind={items[0].id} />);
     const openForm = screen.getByTestId('open');
     fireEvent.click(openForm);
   });

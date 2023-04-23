@@ -1,21 +1,17 @@
 import AddPerson from 'components/AddPerson/AddPerson';
 import Person from 'components/Person/Person';
-import { IPerson } from 'components/interfaces/IPerson';
-import React, { useState } from 'react';
+import React from 'react';
 import style from './PersonPage.module.css';
+import { useAppSelector } from 'redux/store';
 
 const PersonPage = () => {
-  const [items, setItems] = useState<IPerson[]>([]);
-
-  const addCard = (card: IPerson) => {
-    const newItems: IPerson[] = [...items, card];
-    setItems(newItems);
-  };
+  const items = useAppSelector((state) => state.personSlice);
+  const lastInd = items.length !== 0 ? items.length - 1 : 0;
 
   return (
     <div className={style.formPage}>
       <div>Person</div>
-      <AddPerson addCard={addCard} ind={items.length} />
+      <AddPerson ind={items[lastInd].id} />
       {items.length === 0 ? (
         <div>No Person</div>
       ) : (
