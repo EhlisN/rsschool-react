@@ -8,7 +8,7 @@ import { store } from 'redux/store';
 
 function entryClient(store: Store) {
   ReactDOM.hydrateRoot(
-    document.getElementById('root') as Element,
+    document.getElementById('root') as HTMLElement,
     <BrowserRouter>
       <Provider store={store}>
         <App />
