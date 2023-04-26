@@ -1,18 +1,21 @@
-import App from './App';
-import { renderToPipeableStream, RenderToPipeableStreamOptions } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
-import { Provider } from 'react-redux';
+import './index.css';
 import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { Store } from 'redux';
+import App from './App';
+import { Provider } from 'react-redux';
 import { store } from 'redux/store';
-// import { store } from './store/store';
 
-export function render(url: string, options: RenderToPipeableStreamOptions) {
-  return renderToPipeableStream(
-    <Provider store={store}>
-      <StaticRouter location={url}>
+function entryClient(store: Store) {
+  ReactDOM.hydrateRoot(
+    document.getElementById('root') as HTMLElement,
+    <BrowserRouter>
+      <Provider store={store}>
         <App />
-      </StaticRouter>
-    </Provider>,
-    options
+      </Provider>
+    </BrowserRouter>
   );
 }
+
+entryClient(store);
