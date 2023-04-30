@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import style from './AddPerson.module.css';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from 'redux/store';
-import { addPerson } from 'redux/slices/personSlice';
+import { useAppDispatch } from '../../redux/store';
+import { addPerson } from '../../redux/slices/personSlice';
 
 type AddPersonType = {
   ind: number;
@@ -188,7 +188,11 @@ const AddPerson = (props: AddPersonType) => {
 
           <fieldset className={style.form__fieldset}>
             <label className={style.form__label}>Status: </label>
-            <select className={style.form__status} {...register('status', validationForm.status)}>
+            <select
+              data-testid="category-select-input"
+              className={style.form__status}
+              {...register('status', validationForm.status)}
+            >
               <option value=""></option>
               <option value="free">free</option>
               <option value="married">married</option>

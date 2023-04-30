@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Card from 'components/Card/Card';
+import Card from '../../components/Card/Card';
 import style from './Main.module.css';
-import Preloader from 'utils/Preloader/Preloader';
-import Product from 'components/Product/Product';
-import Search from 'components/Search/Search';
-import { useGetProductsQuery } from 'redux/api/api';
-import { useAppSelector } from 'redux/store';
+import Preloader from '../../utils/Preloader/Preloader';
+import Product from '../../components/Product/Product';
+import Search from '../Search/Search';
+import { useGetProductsQuery } from '../../redux/api/api';
+import { useAppSelector } from '../../redux/store';
 
 const Main = () => {
   const searchData = useAppSelector((state) => state.searchSlice);

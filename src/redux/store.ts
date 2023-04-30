@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { productAPI } from 'redux/api/api';
+import { productAPI } from '../redux/api/api';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import productSlice from 'redux/slices/productSlice';
-import searchSlice from 'redux/slices/searchSlice';
+import productSlice from '../redux/slices/productSlice';
+import searchSlice from '../redux/slices/searchSlice';
 import personSlice from './slices/personSlice';
 
 export const store = configureStore({

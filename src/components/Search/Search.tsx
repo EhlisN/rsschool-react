@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
-import { setSearchValue } from 'redux/slices/searchSlice';
-import { useAppDispatch, useAppSelector } from 'redux/store';
+import { setSearchValue } from '../../redux/slices/searchSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import style from './Search.module.css';
 
 const Search = () => {

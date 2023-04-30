@@ -1,8 +1,8 @@
-import AddPerson from 'components/AddPerson/AddPerson';
-import Person from 'components/Person/Person';
+import AddPerson from '../../components/AddPerson/AddPerson';
+import Person from '../../components/Person/Person';
 import React from 'react';
 import style from './PersonPage.module.css';
-import { useAppSelector } from 'redux/store';
+import { useAppSelector } from '../../redux/store';
 
 const PersonPage = () => {
   const items = useAppSelector((state) => state.personSlice);

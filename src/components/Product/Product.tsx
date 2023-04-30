@@ -1,8 +1,8 @@
 import { IProduct } from 'components/interfaces/IProducts';
 import React, { useState } from 'react';
 import style from './Product.module.css';
-import Preloader from 'utils/Preloader/Preloader';
-import { useGetProductByIdQuery } from 'redux/api/api';
+import Preloader from '../../utils/Preloader/Preloader';
+import { useGetProductByIdQuery } from '../../redux/api/api';
 
 type PropsTypeProduct = {
   id: number;
