@@ -1,7 +1,5 @@
 # rsschool-react project
 
-## Live version: https://ehlisn.github.io/Error
-
 ## Description:
 
 ### Module01 – [Class components]( https://github.com/EhlisN/rsschool-react/tree/module01)
