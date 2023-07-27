@@ -1,46 +1,65 @@
-# Getting Started with Create React App
+# rsschool-react project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Live version: https://ehlisn.github.io/Error
 
-## Available Scripts
+## Description:
 
-In the project directory, you can run:
+### Module01 – [Class components]( https://github.com/EhlisN/rsschool-react/tree/module01)
 
-### `npm start`
+* Used Typescript
+* Set up eslint and prettier 
+* Added React-Router version 6. 
+* Added header which shows the current page name. 
+* Added Search Bar
+* Input value saved to LocalStorage during component’s unmount.
+* Added Cards. 
+* Had used class components to get access to lifecycle events or state. 
+* Used Jest tests for components.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Module02 – [Forms]( https://github.com/EhlisN/rsschool-react/tree/module02) 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* Created a separate route for forms using uncontrolled components (with refs)
+* After the Submit button is clicked, all data from the form displayed as Card in the cards list below the form.
+* Added Form validation
+* Added more tests
 
-### `npm test`
+### Module03 – [Hooks]( https://github.com/EhlisN/rsschool-react/tree/module03) 
+* Rewrote the main page with the hooks retain the functionality 
+* Rewrote the form with React Hook Form retain the functionality
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Module04 – [API]( https://github.com/EhlisN/rsschool-react/tree/module04) 
 
-### `npm run build`
+* Rewrote the search page with used API
+* Added modal window with API-request
+* Created a progress indicator
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Module05 – [Redux]( https://github.com/EhlisN/rsschool-react/tree/module05) 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Implemented state management using Redux Toolkit
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Module06 – [SSR/SSG]( https://github.com/EhlisN/rsschool-react/tree/module06) 
 
-### `npm run eject`
+* Moved application to the server and enabled server side rendering.
+* Adopted Redux for SSR.
+* Added e2e tests for your application via cypress.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Used technologies
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- React (class components and hooks) and React-Router
+- Typescript
+- Eslint and prettier
+- Jest tests and e2e tests
+- Form validation
+- API-request
+- Redux, Redux Toolkit
+- SSR
 
-## Learn More
+## Installation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Clone or download the repository(branches module01 – 06)
+- Navigate to the repository's directory
+- Run `npm install` to install all the required packages
+- Run `npm start` to start the local development server
+- Go to `http://localhost:3000/` to use the application
