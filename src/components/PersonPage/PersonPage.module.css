@@ -1,0 +1,22 @@
+.formPage {
+  text-align: center;
+  padding: 50px;
+}
+
+.persons {
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  justify-content: space-around;
+}
+
+@media (max-width: 1080px) {
+  .persons {
+    grid-template-columns: repeat(2, 340px);
+  }
+}
+
+@media (max-width: 720px) {
+  .persons {
+    grid-template-columns: repeat(1, 340px);
+  }
+}
